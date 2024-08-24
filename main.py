@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+from datetime import datetime, timedelta
 
 base_url = os.environ["Alist_Base_Url"]
 username = os.environ["Alist_Username"]
@@ -26,7 +27,16 @@ def list_folders(token, dir_path):
     if not items:
         return []
 
-    folders = [item["name"] for item in items]
+    # 当前时间
+    now = datetime.now()
+    cutoff_time = now - timedelta(minutes=3)
+
+    # 过滤出修改时间在3分钟以外的文件夹
+    folders = [
+        item["name"] for item in items
+        if datetime.fromtimestamp(item["modified"]) < cutoff_time
+    ]
+
     return folders
 
 
