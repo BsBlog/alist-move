@@ -87,7 +87,28 @@ class AlistMove(_PluginBase):
                                         }
                                     }
                                 ]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        'component': 'VCol',
+                        'props': {
+                            'cols': 12,
+                            'md': 6
+                        },
+                        'content': [
+                            {
+                                'component': 'VSwitch',
+                                'props': {
+                                    'model': 'onlyonce',
+                                    'label': '立即运行一次',
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        'component': 'VRow',
+                        'content': [
                             {
                                 'component': 'VCol',
                                 'props': {
@@ -96,32 +117,13 @@ class AlistMove(_PluginBase):
                                 },
                                 'content': [
                                     {
-                                        'component': 'VSwitch',
+                                        'component': 'VTextField',
                                         'props': {
-                                            'model': 'onlyonce',
-                                            'label': '立即运行一次',
+                                            'model': 'GH_Token',
+                                            'label': 'Github API 密钥'
                                         }
                                     }
-                                ],
-                                {
-                                    'component': 'VRow',
-                                    'content': [
-                                        {
-                                            'component': 'VCol',
-                                            'props': {
-                                                'cols': 12,
-                                                'md': 6
-                                            },
-                                            'content': [
-                                                {
-                                                    'component': 'VTextField',
-                                                    'props': {
-                                                        'model': 'GH_Token',
-                                                        'label': 'Github API 密钥',
-                                                    }
-                                                }
-                                            ]
-                                        },
+                                ]
                             }
                         ]
                     }
@@ -129,10 +131,7 @@ class AlistMove(_PluginBase):
             }
         ], {
             "enabled": False,
-            "cron": "",
-            "timeline": "00:03:01",
-            "scan_paths": "",
-            "err_hosts": ""
+            "GH_Token": "",
         }
 
     @eventmanager.register(EventType.TransferComplete)
