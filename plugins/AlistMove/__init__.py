@@ -6,7 +6,7 @@ from app.schemas import TransferInfo
 from app.schemas.types import EventType
 from app.utils.http import RequestUtils
 
-class Alist_Move(_PluginBase):
+class AlistMove(_PluginBase):
     # 插件名称
     plugin_name = "Alist Move"
     # 插件描述
