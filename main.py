@@ -28,14 +28,15 @@ def list_folders(token, dir_path):
         return []
 
     # 当前时间
-    now = datetime.now()
+    now = datetime.utcnow()
     cutoff_time = now - timedelta(minutes=5)
 
     # 过滤出修改时间在5分钟以外的文件夹
-    folders = [
-        item["name"] for item in items
-        if datetime.fromtimestamp(item["modified"]) < cutoff_time
-    ]
+    folders = []
+    for item in items:
+        modified_time = datetime.fromisoformat(item["modified"].replace("Z", "+00:00"))
+        if modified_time < cutoff_time:
+            folders.append(item["name"])
 
     return folders
 
