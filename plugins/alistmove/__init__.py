@@ -85,25 +85,29 @@ class AlistMove(_PluginBase):
                                         'props': {
                                             'model': 'enabled',
                                             'label': '启用插件',
+                                            'hint': '开启后插件将处于激活状态',
+                                            'persistent-hint': True
                                         }
                                     }
                                 ]
-                            }
-                        ]
-                    },
-                    {
-                        'component': 'VCol',
-                        'props': {
-                            'cols': 12,
-                            'md': 6
-                        },
-                        'content': [
+                            },
                             {
-                                'component': 'VSwitch',
+                                'component': 'VCol',
                                 'props': {
-                                    'model': 'onlyonce',
-                                    'label': '立即运行一次',
-                                }
+                                    'cols': 12,
+                                    'md': 6
+                                },
+                                'content': [
+                                    {
+                                        'component': 'VSwitch',
+                                        'props': {
+                                            'model': 'onlyonce',
+                                            'label': '立即运行一次',
+                                            'hint': '插件将立即运行一次',
+                                            'persistent-hint': True
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -113,15 +117,14 @@ class AlistMove(_PluginBase):
                             {
                                 'component': 'VCol',
                                 'props': {
-                                    'cols': 12,
-                                    'md': 6
+                                    'cols': 12
                                 },
                                 'content': [
                                     {
                                         'component': 'VTextField',
                                         'props': {
                                             'model': 'GH_Token',
-                                            'label': 'Github API 密钥'
+                                            'label': 'Github API 密钥',
                                         }
                                     }
                                 ]
@@ -134,6 +137,9 @@ class AlistMove(_PluginBase):
             "enabled": False,
             "GH_Token": "",
         }
+
+    def get_page(self) -> List[dict]:
+        pass
 
     @eventmanager.register(EventType.TransferComplete)
     def Alist_Move(self, event: Event):
