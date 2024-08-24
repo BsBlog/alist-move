@@ -4,16 +4,6 @@ WORKDIR /main
 
 COPY . .
 
-RUN pip install --no-cache-dir requests
-
-RUN apt-get update && apt-get install -y cron
-
-RUN echo "*/30 * * * * cd /app && /usr/local/bin/python main.py" > /etc/cron.d/Alist-Move
-
-RUN chmod 0644 /etc/cron.d/Alist-Move
-
-RUN crontab /etc/cron.d/Alist-Move
-
 RUN apt-get update -y \
     && apt-get upgrade -y \
     && apt-get -y install \

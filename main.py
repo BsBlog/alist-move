@@ -6,8 +6,9 @@ from datetime import datetime, timedelta, timezone
 base_url = os.environ["Alist_Base_Url"]
 username = os.environ["Alist_Username"]
 password = os.environ["Alist_Password"]
-max_retries = 3  # 最大重试次数
-retry_delay = 5  # 每次重试间隔（秒）
+max_retries = 3
+retry_delay = 5
+loop_delay = 600
 
 
 def get_token(username, password):
@@ -93,31 +94,35 @@ def make_request(method, url, headers=None, json=None):
 
 # 主函数
 def main():
-    token = get_token(username, password)
-
-    movies_src_dir = os.environ["Movies_Path"]
-    movies_dst_dir = os.environ["Target_Movies_Path"]
-    movie_folders = list_folders(token, movies_src_dir)
-    if movie_folders:
-        copy_folders(token, movies_src_dir, movies_dst_dir, movie_folders)
-
-    tv_src_dir = os.environ["TV_Path"]
-    tv_dst_dir = os.environ["Target_TV_Path"]
-    tv_folders = list_folders(token, tv_src_dir)
-    if tv_folders:
-        copy_folders(token, tv_src_dir, tv_dst_dir, tv_folders)
-    time.sleep(3)
-
     while True:
-        pending_tasks = get_pending_tasks(token)
-        if not pending_tasks:
-            break
-        time.sleep(1)
+        token = get_token(username, password)
 
-    if movie_folders:
-        delete_folder(token, movies_src_dir, movie_folders)
-    if tv_folders:
-        delete_folder(token, tv_src_dir, tv_folders)
+        movies_src_dir = os.environ["Movies_Path"]
+        movies_dst_dir = os.environ["Target_Movies_Path"]
+        movie_folders = list_folders(token, movies_src_dir)
+        if movie_folders:
+            copy_folders(token, movies_src_dir, movies_dst_dir, movie_folders)
+
+        tv_src_dir = os.environ["TV_Path"]
+        tv_dst_dir = os.environ["Target_TV_Path"]
+        tv_folders = list_folders(token, tv_src_dir)
+        if tv_folders:
+            copy_folders(token, tv_src_dir, tv_dst_dir, tv_folders)
+        time.sleep(3)
+
+        while True:
+            pending_tasks = get_pending_tasks(token)
+            if not pending_tasks:
+                break
+            time.sleep(1)
+
+        if movie_folders:
+            delete_folder(token, movies_src_dir, movie_folders)
+        if tv_folders:
+            delete_folder(token, tv_src_dir, tv_folders)
+
+        print(f"Completed. Waiting for {loop_delay / 60} minutes before next run...")
+        time.sleep(loop_delay)
 
 
 if __name__ == "__main__":
