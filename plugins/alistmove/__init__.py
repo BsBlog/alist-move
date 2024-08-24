@@ -30,6 +30,7 @@ class AlistMove(_PluginBase):
     # 私有属性
     _enabled = False
     _onlyonce = False
+    _GH_Token = None
 
     def init_plugin(self, config: dict = None):
         # 读取配置
