@@ -1,7 +1,7 @@
 import requests
 import time
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 base_url = os.environ["Alist_Base_Url"]
 username = os.environ["Alist_Username"]
@@ -27,14 +27,14 @@ def list_folders(token, dir_path):
     if not items:
         return []
 
-    # 当前时间
-    now = datetime.utcnow()
+    # 当前时间（UTC时区感知的时间）
+    now = datetime.now(timezone.utc)
     cutoff_time = now - timedelta(minutes=5)
 
     # 过滤出修改时间在5分钟以外的文件夹
     folders = []
     for item in items:
-        modified_time = datetime.fromisoformat(item["modified"].replace("Z", "+00:00"))
+        modified_time = datetime.fromisoformat(item["modified"].replace("Z", "+00:00")).astimezone(timezone.utc)
         if modified_time < cutoff_time:
             folders.append(item["name"])
 
@@ -59,7 +59,6 @@ def get_pending_tasks(token):
     headers = {"Authorization": f"{token}"}
     response = requests.get(url, headers=headers)
 
-    # 处理可能的JSONDecodeError
     try:
         data = response.json()["data"]
     except ValueError:
