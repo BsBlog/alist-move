@@ -6,6 +6,9 @@ name: Alist Move
 on:
   workflow_dispatch:
 
+  repository_dispatch:
+    types: [Alist-Move]
+
 jobs:
   Alist-Move:
     name: Alist Move
