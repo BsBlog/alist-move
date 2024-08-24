@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir requests
 
 RUN apt-get update && apt-get install -y cron
 
-RUN echo "0 * * * * cd /app && /usr/local/bin/python main.py" > /etc/cron.d/Alist-Move
+RUN echo "*/10 * * * * cd /app && /usr/local/bin/python main.py" > /etc/cron.d/Alist-Move
 
 RUN chmod 0644 /etc/cron.d/Alist-Move
 
