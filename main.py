@@ -99,7 +99,7 @@ def main():
         pending_tasks = get_pending_tasks(token)
         if not pending_tasks:
             break
-        time.sleep(1)  # 每1秒检查一次
+        time.sleep(5)  # 每5秒检查一次
 
     # 删除源文件夹
     if movie_folders:
