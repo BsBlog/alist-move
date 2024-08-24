@@ -50,7 +50,7 @@ def copy_folders(token, src_dir, dst_dir, names):
 
 # 获取未完成任务
 def get_pending_tasks(token):
-    url = f"{base_url}/api/fs/tasks"
+    url = f"{base_url}/api/admin/task/copy/undone"
     headers = {"Authorization": f"{token}"}  # 直接使用token
     response = requests.get(url, headers=headers)
 
