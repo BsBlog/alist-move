@@ -29,9 +29,9 @@ def list_folders(token, dir_path):
 
     # 当前时间
     now = datetime.now()
-    cutoff_time = now - timedelta(minutes=3)
+    cutoff_time = now - timedelta(minutes=5)
 
-    # 过滤出修改时间在3分钟以外的文件夹
+    # 过滤出修改时间在5分钟以外的文件夹
     folders = [
         item["name"] for item in items
         if datetime.fromtimestamp(item["modified"]) < cutoff_time
