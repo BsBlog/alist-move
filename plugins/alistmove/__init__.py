@@ -2,6 +2,7 @@ import subprocess
 from app.core.config import settings
 from app.core.event import eventmanager, Event
 from app.plugins import _PluginBase
+from app.log import logger
 from app.schemas import TransferInfo
 from app.schemas.types import EventType
 from app.utils.http import RequestUtils
